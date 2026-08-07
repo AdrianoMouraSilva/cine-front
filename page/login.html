@@ -1,0 +1,97 @@
+<!-- Wrapper centralizador: min-vh-100 garante altura total da viewport -->
+<div class="container min-vh-100 d-flex justify-content-center align-items-center py-4">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+        <div class="card shadow-sm border-0 bg-body-tertiary p-4 rounded-4">
+
+            <!-- Alerta bonito e moderno de sucesso (inicialmente oculto) -->
+            <div id="alerta-sucesso"
+                class="alert alert-success d-flex align-items-center d-none mb-4 rounded-3 shadow-sm" role="alert">
+                <i class="bi bi-check-circle-fill flex-shrink-0 me-2 fs-4"></i>
+                <div>
+                    <strong>Tudo certo!</strong> Login realizado com sucesso.
+                </div>
+            </div>
+
+            <h4 class="text-center fw-bold mb-4">Acessar Conta</h4>
+
+            <!-- O action começa vazio e será preenchido dinamicamente pelo JavaScript -->
+            <form id="form-login" method="POST">
+                <div class="mb-3">
+                    <label for="email" class="form-label fw-semibold">Login / E-mail</label>
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Digite seu E-mail"
+                        required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password" class="form-label fw-semibold">Senha</label>
+                    <input type="password" name="password" class="form-control" id="password"
+                        placeholder="Digite sua senha" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="confima-password" class="form-label fw-semibold">Confirme a Senha</label>
+                    <input type="password" name="confima-password" class="form-control" id="confima-password"
+                        placeholder="Confirme sua senha" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold" id="btn-login">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Entrar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { API_FORM_CADASTRAR } from '../config.js';
+
+    const formCadastrar = document.getElementById('form-cadastro');
+    const botaoCadastrar = document.getElementById('btn-cadastrar');
+    const alertaSucesso = document.getElementById('alerta-sucesso');
+
+    // Define o action do formulário dinamicamente
+    formCadastrar.action = API_FORM_CADASTRAR;
+
+    formCadastrar.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const senha = document.getElementById('password').value;
+        const confirmaSenha = document.getElementById('confima-password').value;
+
+        // Validação básica de confirmação de senha
+        if (senha !== confirmaSenha) {
+            alert('As senhas digitadas não coincidem. Por favor, verifique.');
+            return;
+        }
+
+        // Esconde alerta anterior
+        alertaSucesso.classList.add('d-none');
+
+        // Estado de carregamento
+        botaoCadastrar.disabled = true;
+        botaoCadastrar.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Enviando cadastro...`;
+
+        try {
+            const response = await fetch(formCadastrar.action, {
+                method: 'POST',
+                body: new FormData(formCadastrar),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                formCadastrar.reset();
+                alertaSucesso.classList.remove('d-none');
+                alertaSucesso.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                alert('Ocorreu um erro ao enviar os dados. Verifique a URL do serviço de e-mail.');
+            }
+        } catch (error) {
+            alert('Erro de conexão ao tentar enviar o cadastro.');
+        } finally {
+            botaoCadastrar.disabled = false;
+            botaoCadastrar.innerHTML = `<i class="bi bi-envelope me-1"></i> Cadastrar`;
+        }
+    });
+</script>

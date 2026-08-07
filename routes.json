@@ -1,0 +1,52 @@
+{
+    "/": {
+        "file": "page/home.html",
+        "icon": "bi bi-house-door",
+        "name": "Início"
+    },
+    "/filme": {
+        "file": "page/filme.html",
+        "icon": "bi bi-film",
+        "name": "Filme"
+    },
+    "/serie": {
+        "file": "page/serie.html",
+        "icon": "bi bi-tv",
+        "name": "Série"
+    },
+    "/contatos": {
+        "file": "page/contatos.html",
+        "icon": "bi bi-envelope",
+        "name": "Contato"
+    },
+     "/cadastro": {
+        "file": "page/cadastro.html",
+        "icon": "bi bi-envelope",
+        "name": "Cadastro"
+    },
+     "/login": {
+        "file": "page/login.html",
+        "icon": "bi bi-envelope",
+        "name": "Login"
+    },
+    "/recomendar": {
+        "name": "Recomendar",
+        "icon": "bi bi-envelope-paper-fill",
+        "file": "page/recomendar.html"
+    },
+    "/extra": {
+        "name": "Extras",
+        "icon": "bi bi-envelope-paper-fill",
+        "file": "#",
+        "subitens": [
+            {
+                "titulo": "Lançamentos",
+                "link": "/series/lancamentos"
+            },
+            {
+                "titulo": "Mais Assistidas",
+                "link": "/series/mais-assistidas"
+            }
+        ]
+    }
+}

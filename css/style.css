@@ -1,0 +1,423 @@
+:root {
+  --bg-primary: #D7EEFE;
+  /* Fundo principal (cinza quase preto) */
+  --bg-secondary: #1e1e1e;
+  /* Fundo de cards, modais e menus */
+  --bg-tertiary: #2d2d2d;
+  /* Fundo para hover, inputs ou destaques leves */
+
+  --text-primary: #3658B8;
+  /* Texto principal (branco suave) */
+  --text-secondary: #a0a0a0;
+  /* Subtítulos e textos secundários */
+
+  --border-color: #333333;
+  /* Bordas sutis */
+}
+
+body {
+  background-color: var(--bg-primary);
+  /* font-family: Georgia, 'Times New Roman', Times, serif; */
+}
+
+main{
+  padding: 60px;
+}
+
+.txt-centro{
+  text-align: center;
+}
+
+header {
+  background-color: #4169E1;
+  color: aliceblue;
+  padding: 1px 1px 1px 15px;
+}
+
+.txt-tit-principal {
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  /* ~40px */
+}
+
+.txt-conteudo {
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  /* ~40px */
+}
+
+.txt-centro {
+  text-align: center;
+}
+
+
+.bg-azul {
+  background-color: blue;
+}
+
+.bg-azul-claro {
+  background-color: #87CEFA
+}
+
+.bg-amerelo {
+  background-color: yellow;
+}
+
+
+.bg-vermelho {
+  background-color: red;
+}
+
+.bg-verde {
+  background-color: green;
+}
+
+.bg-laranja {
+  background-color: orange;
+  color: #fff;
+}
+
+.color-amerelo {
+  color:#FFD700;
+}
+
+.estrela::before {
+  content: "\2605"; /* Código Unicode para estrela preenchida */
+  color: #FFD700;   /* Cor amarela/dourada */
+  margin-right: 5px;
+  font-size: 22px;
+}
+
+
+.meu-menu {
+  display: flex;
+  justify-content: space-between;
+  /* Empurra o logo para a esquerda e os links para a direita */
+  align-items: center;
+  /* Alinha verticalmente no centro */
+  padding: 1rem 2rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  /* Cria espaço igual entre cada item do menu */
+  list-style: none;
+  justify-content: flex-start;
+  /* Alinha todos os itens no início (esquerda) */
+  padding: 10px 10px 30px 40px;
+
+}
+
+.nav-links-btn {
+  display: flex;
+  width: 100%;            
+  box-sizing: border-box;  
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 12px;              
+}
+
+.nav-links-btn li {
+  flex: 1;                
+  min-width: 0;            
+  text-align: center;
+}
+
+.nav-links-btn li a {
+  display: block;         
+  width: 100%;
+  text-decoration: none;
+  box-sizing: border-box;
+  white-space: nowrap;    
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
+
+@media (max-width: 768px) {
+  .nav-links-btn {
+    flex-wrap: wrap;      
+  }
+  
+  .nav-links-btn li {
+    flex: 1 1 calc(33.33% - 10px); 
+  }
+
+  /* .card-box {
+    flex-wrap: wrap;      
+  }
+
+  .card-box {
+    flex: 1 1 calc(33.33% - 10px); 
+  } */
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  /* Distribui as 3 divs com espaço uniforme entre elas */
+  align-items: center;
+  /* Alinha verticalmente no centro */
+  gap: 20px;
+  /* Distância de segurança entre elas */
+}
+
+/* Faz com que as 3 divs tenham exatamente a mesma largura */
+.card {
+  flex: 1;
+  border-radius: 5px;
+  padding: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 80px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  /* 0 em cima/embaixo, 15px na esquerda/direita */
+}
+.card-box {
+  padding: 5px;
+
+}
+
+.card-conteudo-box {
+  flex: 1;
+  border-radius: 5px;
+  padding: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 80px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  /* 0 em cima/embaixo, 15px na esquerda/direita */
+}
+
+/* ==========================================
+   ESTILO BASE DO BOTÃO (Padrão Bootstrap)
+   ========================================== */
+.btn {
+  display: inline-block;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Corpo/Espaçamento */
+  padding: 0.375rem 0.75rem;
+
+  /* Bordas e Cantos */
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  /* Cantos levemente arredondados */
+
+  /* Transição suave nos efeitos */
+  transition: color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+/* Estado de Foco (Clique/Tabulação) */
+.btn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Estado Desabilitado */
+.btn:disabled,
+.btn.disabled {
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+.btn-arredondado {
+   border-radius: 2.375rem;
+}
+
+/* ==========================================
+   VARIÁVEIS DE CORES DO CORPO
+   ========================================== */
+
+/* Botão Primário (Azul) */
+.btn-primario {
+  color: #fff;
+  background-color: #D2691E;
+  border-color: #BD5E1B;
+}
+
+.btn-primario:hover {
+  color: #fff;
+  background-color: #BD5E1B;
+  border-color: #934915;
+}
+
+.btn-transparente {
+  color: #4169E1;
+  background-color: #fff;
+  border-color: #4169E1;
+}
+
+.btn-transparente:hover {
+  color: #fff;
+  background-color: #BD5E1B;
+  border-color: #934915;
+}
+
+/* Botão Secundário (Cinza) */
+.btn-secundario {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-secundario:hover {
+  color: #fff;
+  background-color: #5c636a;
+  border-color: #565e64;
+}
+
+
+
+.altura-p {
+  min-height: 120px;
+}
+
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.m-top {
+  margin-top: 0.9rem;
+}
+
+.m-all {
+  margin: 0.9rem;
+}
+
+.p-all {
+  padding: 0.9rem;
+
+}
+
+.p-direita {
+  padding-right: 0.9rem;
+
+}
+
+/* Linha */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+/* Base para TODAS as colunas existentes */
+[class^="col-"],
+[class*=" col-"] {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* ==========================================================================
+   1. PADRÃO: CELULARES (Abaixo de 576px) 
+   ========================================================================== */
+.col-1 {
+  flex: 0 0 8.333333%;
+  max-width: 8.333333%;
+}
+
+.col-2 {
+  flex: 0 0 16.666667%;
+  max-width: 16.666667%;
+}
+
+.col-3 {
+  flex: 0 0 25%;
+  max-width: 25%;
+}
+
+.col-4 {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+}
+
+.col-5 {
+  flex: 0 0 41.666667%;
+  max-width: 41.666667%;
+}
+
+.col-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.col-7 {
+  flex: 0 0 58.333333%;
+  max-width: 58.333333%;
+}
+
+.col-8 {
+  flex: 0 0 66.666667%;
+  max-width: 66.666667%;
+}
+
+.col-9 {
+  flex: 0 0 75%;
+  max-width: 75%;
+}
+
+.col-10 {
+  flex: 0 0 83.333333%;
+  max-width: 83.333333%;
+}
+
+.col-11 {
+  flex: 0 0 91.666667%;
+  max-width: 91.666667%;
+}
+
+.col-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+
+
+.pd-top-2{
+  padding-top: 2px;
+}
+
+.pd-top-5{
+  padding-top: 20px;
+}
+
+.pd-top-10{
+  padding-top: 20px;
+}
+
+.pd-top-20{
+  padding-top: 20px;
+}
+
+.pd-top-30{
+  padding-top: 20px;
+}
+
+.pd-all-40{
+  padding: 40px;
+}
+
+.img-card{
+  width: 100%;
+}

@@ -1,0 +1,405 @@
+/* ==========================================================================
+   SISTEMA DE GRID DE 12 COLUNAS COMPLETO (PADRÃO DE MERCADO)
+   ========================================================================== */
+
+/* Configuração de Reset essencial */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Remova também as margens padrões do body para tirar qualquer fresta branca */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+Quiser nenhuma fresta/espaço entre as colunas?
+Por padrão, o grid deixa 15px de espaço (gutter) para os textos não colarem uns nos outros. 
+Se você quiser criar aquele efeito de fotos ou blocos de cores 100% colados (sem nenhum espaço entre eles), 
+adicione uma classe chamada .no-gutters na sua .row: 
+*/
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+.no-gutters > [class^="col-"],
+.no-gutters > [class*=" col-"] {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+/* Adicione isso junto com as configurações iniciais do seu grid.css */
+
+._container-fluid {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+
+
+/* Containers responsivos (mudam de tamanho máximo dependendo da tela) */
+._container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Linha */
+._row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+/* Base para TODAS as colunas existentes */
+[class^="col-"], [class*=" col-"] {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* ==========================================================================
+   1. PADRÃO: CELULARES (Abaixo de 576px) 
+   ========================================================================== */
+._col-1  { flex: 0 0 8.333333%; max-width: 8.333333%; }
+._col-2  { flex: 0 0 16.666667%; max-width: 16.666667%; }
+._col-3  { flex: 0 0 25%; max-width: 25%; }
+._col-4  { flex: 0 0 33.333333%; max-width: 33.333333%; }
+._col-5  { flex: 0 0 41.666667%; max-width: 41.666667%; }
+._col-6  { flex: 0 0 50%; max-width: 50%; }
+._col-7  { flex: 0 0 58.333333%; max-width: 58.333333%; }
+._col-8  { flex: 0 0 66.666667%; max-width: 66.666667%; }
+._col-9  { flex: 0 0 75%; max-width: 75%; }
+._col-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+._col-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+._col-12 { flex: 0 0 100%; max-width: 100%; }
+
+/* ==========================================================================
+   2. BREAKPOINT `sm`: CELULARES GRANDES (A partir de 576px)
+   ========================================================================== */
+@media (min-width: 576px) {
+  ._container { max-width: 540px; }
+  
+  ._col-sm-1  { flex: 0 0 8.333333%; max-width: 8.333333%; }
+  ._col-sm-2  { flex: 0 0 16.666667%; max-width: 16.666667%; }
+  ._col-sm-3  { flex: 0 0 25%; max-width: 25%; }
+  ._col-sm-4  { flex: 0 0 33.333333%; max-width: 33.333333%; }
+  ._col-sm-5  { flex: 0 0 41.666667%; max-width: 41.666667%; }
+  ._col-sm-6  { flex: 0 0 50%; max-width: 50%; }
+  ._col-sm-7  { flex: 0 0 58.333333%; max-width: 58.333333%; }
+  ._col-sm-8  { flex: 0 0 66.666667%; max-width: 66.666667%; }
+  ._col-sm-9  { flex: 0 0 75%; max-width: 75%; }
+  ._col-sm-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+  ._col-sm-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+  ._col-sm-12 { flex: 0 0 100%; max-width: 100%; }
+}
+
+/* ==========================================================================
+   3. BREAKPOINT `md`: TABLETS (A partir de 768px)
+   ========================================================================== */
+@media (min-width: 768px) {
+  ._container { max-width: 720px; }
+  
+  ._col-md-1  { flex: 0 0 8.333333%; max-width: 8.333333%; }
+  ._col-md-2  { flex: 0 0 16.666667%; max-width: 16.666667%; }
+  ._col-md-3  { flex: 0 0 25%; max-width: 25%; }
+  ._col-md-4  { flex: 0 0 33.333333%; max-width: 33.333333%; }
+  ._col-md-5  { flex: 0 0 41.666667%; max-width: 41.666667%; }
+  ._col-md-6  { flex: 0 0 50%; max-width: 50%; }
+  ._col-md-7  { flex: 0 0 58.333333%; max-width: 58.333333%; }
+  ._col-md-8  { flex: 0 0 66.666667%; max-width: 66.666667%; }
+  ._col-md-9  { flex: 0 0 75%; max-width: 75%; }
+  ._col-md-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+  ._col-md-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+  ._col-md-12 { flex: 0 0 100%; max-width: 100%; }
+}
+
+/* ==========================================================================
+   4. BREAKPOINT `lg`: NOTEBOOKS (A partir de 992px)
+   ========================================================================== */
+@media (min-width: 992px) {
+  ._container { max-width: 960px; }
+  
+  ._col-lg-1  { flex: 0 0 8.333333%; max-width: 8.333333%; }
+  ._col-lg-2  { flex: 0 0 16.666667%; max-width: 16.666667%; }
+  ._col-lg-3  { flex: 0 0 25%; max-width: 25%; }
+  ._col-lg-4  { flex: 0 0 33.333333%; max-width: 33.333333%; }
+  ._col-lg-5  { flex: 0 0 41.666667%; max-width: 41.666667%; }
+  ._col-lg-6  { flex: 0 0 50%; max-width: 50%; }
+  ._col-lg-7  { flex: 0 0 58.333333%; max-width: 58.333333%; }
+  ._col-lg-8  { flex: 0 0 66.666667%; max-width: 66.666667%; }
+  ._col-lg-9  { flex: 0 0 75%; max-width: 75%; }
+  ._col-lg-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+  ._col-lg-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+  ._col-lg-12 { flex: 0 0 100%; max-width: 100%; }
+}
+
+/* ==========================================================================
+   5. BREAKPOINT `xl`: MONITORES DESKTOP (A partir de 1200px)
+   ========================================================================== */
+@media (min-width: 1200px) {
+  ._container { max-width: 1140px; }
+  
+  ._col-xl-1  { flex: 0 0 8.333333%; max-width: 8.333333%; }
+  ._col-xl-2  { flex: 0 0 16.666667%; max-width: 16.666667%; }
+  ._col-xl-3  { flex: 0 0 25%; max-width: 25%; }
+  ._col-xl-4  { flex: 0 0 33.333333%; max-width: 33.333333%; }
+  ._col-xl-5  { flex: 0 0 41.666667%; max-width: 41.666667%; }
+  ._col-xl-6  { flex: 0 0 50%; max-width: 50%; }
+  ._col-xl-7  { flex: 0 0 58.333333%; max-width: 58.333333%; }
+  ._col-xl-8  { flex: 0 0 66.666667%; max-width: 66.666667%; }
+  ._col-xl-9  { flex: 0 0 75%; max-width: 75%; }
+  ._col-xl-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+  ._col-xl-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+  ._col-xl-12 { flex: 0 0 100%; max-width: 100%; }
+}
+
+/* ==========================================================================
+   6. BREAKPOINT `xxl`: MONITORES ULTRA-WIDE (A partir de 1400px)
+   ========================================================================== */
+@media (min-width: 1400px) {
+  ._container { max-width: 1320px; }
+  
+  ._col-xxl-1  { flex: 0 0 8.333333%; max-width: 8.333333%; }
+  ._col-xxl-2  { flex: 0 0 16.666667%; max-width: 16.666667%; }
+  ._col-xxl-3  { flex: 0 0 25%; max-width: 25%; }
+  ._col-xxl-4  { flex: 0 0 33.333333%; max-width: 33.333333%; }
+  ._col-xxl-5  { flex: 0 0 41.666667%; max-width: 41.666667%; }
+  ._col-xxl-6  { flex: 0 0 50%; max-width: 50%; }
+  ._col-xxl-7  { flex: 0 0 58.333333%; max-width: 58.333333%; }
+  ._col-xxl-8  { flex: 0 0 66.666667%; max-width: 66.666667%; }
+  ._col-xxl-9  { flex: 0 0 75%; max-width: 75%; }
+  ._col-xxl-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+  ._col-xxl-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+  ._col-xxl-12 { flex: 0 0 100%; max-width: 100%; }
+}
+
+/* ==========================================================================
+   ESTRUTURA DO MENU RESPONSIVO (NA MÃO)
+   ========================================================================== */
+
+/* Estilo da barra de navegação */
+.nav-header {
+  background-color: #1a1a1a;
+  color: white;
+  padding: 15px 0;
+  position: relative;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Lista de links do menu */
+.menu-links {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.menu-links a:hover {
+  color: #3498db;
+}
+
+/* Esconde o checkbox que controla o clique do hambúrguer */
+#menu-toggle {
+  display: none;
+}
+
+/* Ícone do Hambúrguer (Escondido no PC por padrão) */
+.hamburger-label {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger-label span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  transition: 0.3s;
+}
+
+/* ==========================================================================
+   BREAKPOINT COMPATÍVEL COM O SEU GRID (Telas menores que 768px)
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* Mostra o botão hambúrguer */
+  .hamburger-label {
+    display: flex;
+    float: right; /* Joga o botão para a extrema direita */
+  }
+
+  /* Transforma a lista de links em um menu que desce ocupando a tela toda */
+  .menu-links {
+    display: none; /* Escondido por padrão no celular */
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 100%; /* Fica logo abaixo da barra preta */
+    left: 0;
+    background-color: #1a1a1a;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    gap: 15px;
+  }
+
+  /* MÁGICA: Quando o checkbox estiver marcado, mostra o menu */
+  #menu-toggle:checked ~ .menu-links {
+    display: flex;
+  }
+
+  /* Efeito visual nas barrinhas do hambúrguer quando aberto (opcional) */
+  #menu-toggle:checked ~ .hamburger-label span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  #menu-toggle:checked ~ .hamburger-label span:nth-child(2) {
+    opacity: 0;
+  }
+  #menu-toggle:checked ~ .hamburger-label span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -7px);
+  }
+}
+
+/* ==========================================================================
+   OPÇÃO 2: MENU LATERAL SLIDE RESPONSIVO (NA MÃO)
+   ========================================================================== */
+
+/* Barra de navegação principal */
+.nav-lateral-header {
+  background-color: #111111;
+  color: white;
+  padding: 15px 0;
+  position: relative;
+  z-index: 999;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Links para Computador (Padrão) */
+.menu-sidebar {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-sidebar a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.menu-sidebar a:hover {
+  color: #3498db;
+}
+
+/* Esconde o mecanismo do checkbox */
+#sidebar-toggle {
+  display: none;
+}
+
+/* Ícone do Hambúrguer */
+.btn-hamb {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+  float: right;
+}
+
+.btn-hamb span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  transition: 0.3s;
+}
+
+/* ==========================================================================
+   BREAKPOINT: COMPORTAMENTO PARA CELULAR (Abaixo de 768px)
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* Mostra o botão hambúrguer no celular */
+  .btn-hamb {
+    display: flex;
+  }
+
+  /* Transforma o menu em uma barra lateral ocupando a altura total */
+  .menu-sidebar {
+    position: fixed;
+    top: 0;
+    right: -280px; /* Esconde o menu para fora da tela (à direita). Use left: -280px se quiser na esquerda */
+    width: 280px;
+    height: 100vh; /* Altura total da tela */
+    background-color: #111111;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinha os itens no topo */
+    gap: 0;
+    padding-top: 80px; /* Espaço para não cobrir o botão */
+    transition: right 0.4s ease; /* Animação suave de deslizar */
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+    z-index: 998;
+  }
+
+  /* Estiliza os links empilhados no celular */
+  .menu-sidebar li {
+    width: 100%;
+  }
+
+  .menu-sidebar a {
+    display: block;
+    padding: 15px 30px;
+    border-bottom: 1px solid #222;
+    text-align: left;
+  }
+
+  /* MÁGICA DO SLIDE: Quando clicado, empurra o menu para dentro da tela */
+  #sidebar-toggle:checked ~ .menu-sidebar {
+    right: 0; /* Traz o menu para a tela */
+  }
+
+  /* Transforma o Hambúrguer em um "X" quando o menu abre */
+  #sidebar-toggle:checked ~ .btn-hamb {
+    position: relative;
+    z-index: 1000; /* Garante que o X fique por cima do menu lateral */
+  }
+  #sidebar-toggle:checked ~ .btn-hamb span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  #sidebar-toggle:checked ~ .btn-hamb span:nth-child(2) {
+    opacity: 0;
+  }
+  #sidebar-toggle:checked ~ .btn-hamb span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -7px);
+  }
+}

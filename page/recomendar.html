@@ -1,0 +1,108 @@
+<div class="row justify-content-center py-4">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0 bg-body-tertiary p-4 rounded-4">
+            
+            <!-- Alerta bonito e moderno de sucesso (inicialmente oculto) -->
+            <div id="alerta-sucesso" class="alert alert-success d-flex align-items-center d-none mb-4 rounded-3 shadow-sm" role="alert">
+                <i class="bi bi-check-circle-fill flex-shrink-0 me-2 fs-4"></i>
+                <div>
+                    <strong>Tudo certo!</strong> Sua recomendação foi enviada por e-mail com sucesso.
+                </div>
+            </div>
+
+            <!-- O action começa vazio e será preenchido dinamicamente pelo JavaScript -->
+            <form id="form-recomendacao" method="POST">
+                
+                <div class="mb-3">
+                    <label for="titulo" class="form-label fw-semibold">Título</label>
+                    <input type="text" name="titulo" class="form-control" id="titulo" placeholder="Digite um título" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="tipo" class="form-label fw-semibold">Tipo</label>
+                    <select name="tipo" id="tipo" class="form-select" required>
+                        <option value="filme">Filme</option>
+                        <option value="serie">Série</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="genero" class="form-label fw-semibold">Gênero</label>
+                    <select name="genero" id="genero" class="form-select" required>
+                        <option value="acao">Ação</option>
+                        <option value="terror">Terror</option>
+                        <option value="comedia">Comédia</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="plataforma" class="form-label fw-semibold">Plataforma</label>
+                    <select name="plataforma" id="plataforma" class="form-select" required>
+                        <option value="youtube">Youtube</option>
+                        <option value="netflix">Netflix</option>
+                        <option value="disney">Disney</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Nota" class="form-label fw-semibold">Nota</label>
+                    <input type="number" name="nota" class="form-control" id="Nota" placeholder="Digite uma nota de 1 a 10" required min="1" max="10">
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold" id="btn-enviar">
+                    <i class="bi bi-envelope me-1"></i> Enviar recomendação por e-mail
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { API_FORM_E_MAIL } from '../config.js';
+
+    const form = document.getElementById('form-recomendacao');
+    const botao = document.getElementById('btn-enviar');
+    const alertaSucesso = document.getElementById('alerta-sucesso');
+
+    // Define o action do formulário dinamicamente usando a constante importada
+    form.action = API_FORM_E_MAIL;
+
+    // Associa o evento de envio via JavaScript para interceptar e impedir o redirecionamento
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Impede o navegador de sair da página atual
+        
+        // Esconde o alerta anterior se estiver visível
+        alertaSucesso.classList.add('d-none');
+
+        // Desativa o botão e mostra o carregamento
+        botao.disabled = true;
+        botao.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Enviando recomendação...`;
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json' // Obriga o Formspree a responder via JSON em vez de redirecionar a página
+                }
+            });
+
+            if (response.ok) {
+                // Limpa os campos do formulário
+                form.reset();
+                
+                // Exibe o alerta bonito de sucesso
+                alertaSucesso.classList.remove('d-none');
+                alertaSucesso.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                alert('Ocorreu um erro ao enviar. Verifique se o ID do Formspree está correto.');
+            }
+        } catch (error) {
+            alert('Erro de conexão ao tentar enviar o e-mail.');
+        } finally {
+            // Restaura o botão ao estado original
+            botao.disabled = false;
+            botao.innerHTML = `<i class="bi bi-envelope me-1"></i> Enviar recomendação por e-mail`;
+        }
+    });
+</script>

@@ -1,0 +1,47 @@
+/* 1. Altera o box-sizing de todos os elementos para incluir padding e bordas no tamanho total */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. Melhora a renderização no corpo da página */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 3. Garante que imagens e mídias não estourem os contêineres */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 4. Remove estilos herdados de formulários e botões */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 5. Remove decorações padrão de links e listas */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+
+

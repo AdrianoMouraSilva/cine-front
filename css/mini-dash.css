@@ -1,0 +1,119 @@
+/* ==========================================================================
+   ESTRUTURA DE DASHBOARD PROFISSIONAL (NA MÃO)
+   ========================================================================== */
+
+/* Reseta o comportamento da página para ocupar a tela inteira */
+html, body {
+  height: 100%;
+  overflow: hidden; /* Evita barras de rolagem duplas na tela toda */
+  font-family: sans-serif;
+  background-color: #f4f6f9;
+}
+
+/* O Container do Dashboard junta a Sidebar e o Conteúdo */
+.dashboard-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+/* --- BARRA LATERAL (SIDEBAR) --- */
+.sidebar {
+  width: 260px;
+  height: 100%;
+  background-color: #1e293b; /* Azul escuro corporativo */
+  color: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.sidebar-header {
+  padding: 20px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-bottom: 1px solid #334155;
+  text-align: center;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 20px 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sidebar-menu a {
+  display: block;
+  padding: 12px 25px;
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.sidebar-menu li.active a, .sidebar-menu a:hover {
+  background-color: #334155;
+  color: #fff;
+  border-left: 4px solid #3b82f6; /* Detalhe azul na aba ativa */
+}
+
+/* --- CONTEÚDO DA DIREITA --- */
+.main-content {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Permite rolar apenas o conteúdo se ele for grande */
+}
+
+/* Topbar interna do painel */
+.topbar {
+  background-color: #fff;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.content-body {
+  padding: 30px;
+}
+
+/* Esconde o controlador do menu */
+#dash-toggle {
+  display: none;
+}
+
+.dash-hamb {
+  display: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+/* ==========================================================================
+   BREAKPOINT: ADAPTAÇÃO PARA CELULARES (Abaixo de 768px)
+   ========================================================================== */
+@media (max-width: 767px) {
+  .dash-hamb {
+    display: block; /* Mostra o botão para abrir o menu no celular */
+  }
+
+  /* No celular, a barra lateral fica escondida na esquerda */
+  .sidebar {
+    position: fixed;
+    left: -260px;
+    z-index: 9999;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+  }
+
+  /* MÁGICA: Quando clica no botão, a sidebar aparece */
+  #dash-toggle:checked ~ .sidebar {
+    left: 0;
+  }
+}
