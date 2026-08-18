@@ -369,7 +369,7 @@
         }
     }
 
- async function abrirDetalhes(id, tipoMidia) {
+    async function abrirDetalhes(id, tipoMidia) {
         const modalElement = document.getElementById('detalhesModal');
         const modalTitulo = document.getElementById('modal-titulo-cabecalho');
         const modalCorpo = document.getElementById('modal-corpo-conteudo');
@@ -418,17 +418,17 @@
                 informacaoExtra = `<p class="small text-muted mb-1"><i class="bi bi-collection-play me-1"></i> ${data.number_of_seasons} Temporada(s) | ${data.number_of_episodes || 0} Episódios</p>`;
             }
 
-            // Elenco Principal 100% responsivo (quebra para a linha de baixo)
+            // Elenco Principal 100% responsivo com scroll horizontal fluído
             let elencoHtml = '<p class="small text-muted">Não disponível.</p>';
             if (data.credits && data.credits.cast && data.credits.cast.length > 0) {
                 elencoHtml = `
-                    <div class="d-flex flex-wrap gap-2 justify-content-start w-100">
-                        ${data.credits.cast.slice(0, 12).map(ator => {
+                    <div class="d-flex gap-3 overflow-x-auto pb-2 w-100" style="scrollbar-width: thin;">
+                        ${data.credits.cast.map(ator => {
                             const fotoAtor = ator.profile_path ? BASE_IMG_URL + ator.profile_path : 'https://placehold.co/100x150?text=Sem+Foto';
                             return `
-                                <div class="actor-badge text-center ator-card-click mb-2" style="width: 80px;" data-id="${ator.id}" title="${ator.name}">
-                                    <img src="${fotoAtor}" class="rounded-circle shadow-sm" style="width: 60px; height: 60px; object-fit: cover;" alt="${ator.name}">
-                                    <p class="small text-truncate mt-1 mb-0 fw-semibold" style="font-size: 0.7rem;">${ator.name}</p>
+                                <div class="actor-badge flex-shrink-0 text-center ator-card-click" style="width: 85px;" data-id="${ator.id}" title="${ator.name}">
+                                    <img src="${fotoAtor}" class="rounded-circle shadow-sm" style="width: 65px; height: 65px; object-fit: cover;" alt="${ator.name}">
+                                    <p class="small text-truncate mt-1 mb-0 fw-semibold" style="font-size: 0.75rem;">${ator.name}</p>
                                 </div>
                             `;
                         }).join('')}
@@ -451,7 +451,7 @@
                 }
             }
 
-            // Franquia 100% responsiva (quebra para a linha de baixo)
+            // Franquia 100% responsiva com scroll horizontal
             let colecaoHtml = '';
             if (data.belongs_to_collection) {
                 try {
@@ -466,7 +466,7 @@
                                 <div class="row mt-4">
                                     <div class="col-12">
                                         <h6 class="fw-semibold mb-3"><i class="bi bi-collection me-1 text-primary"></i> Franquia: ${dadosColecao.name}</h6>
-                                        <div class="d-flex flex-wrap gap-3 justify-content-start w-100">
+                                        <div class="d-flex gap-3 overflow-x-auto pb-3 w-100" style="scrollbar-width: thin;">
                                             ${partesFilmes.map(colItem => {
                                                 const cTitulo = colItem.title || 'Sem Título';
                                                 const cPoster = colItem.poster_path ? BASE_IMG_URL + colItem.poster_path : 'https://placehold.co/100x150?text=Sem+Imagem';
@@ -475,9 +475,9 @@
                                                 const estiloAtual = isAtual ? 'border border-2 border-primary' : '';
                                                 
                                                 return `
-                                                    <div class="recommendation-item col-item-click mb-2" style="width: 110px;" data-id="${colItem.id}" data-tipo="movie">
+                                                    <div class="recommendation-item flex-shrink-0 col-item-click" style="width: 120px;" data-id="${colItem.id}" data-tipo="movie">
                                                         <div class="position-relative">
-                                                            <img src="${cPoster}" class="rounded shadow-sm w-100 ${estiloAtual}" style="height: 160px; object-fit: cover;" alt="${cTitulo}">
+                                                            <img src="${cPoster}" class="rounded shadow-sm w-100 ${estiloAtual}" style="height: 170px; object-fit: cover;" alt="${cTitulo}">
                                                             ${isAtual ? '<span class="badge bg-primary position-absolute bottom-0 start-50 translate-middle-x mb-1" style="font-size: 0.55rem;">Atual</span>' : ''}
                                                         </div>
                                                         <p class="small text-truncate mt-1 mb-0 fw-semibold" title="${cTitulo}" style="font-size: 0.75rem;">${cTitulo} (${cAno})</p>
@@ -495,31 +495,31 @@
                 }
             }
 
-            // Galeria de Imagens 100% responsiva (quebra para a linha de baixo)
+            // Galeria de Imagens 100% responsiva com scroll horizontal
             let imagensHtml = '<p class="small text-muted">Nenhuma imagem disponível.</p>';
             if (data.images && data.images.backdrops && data.images.backdrops.length > 0) {
                 imagensHtml = `
-                    <div class="d-flex flex-wrap gap-2 justify-content-start w-100">
-                        ${data.images.backdrops.slice(0, 6).map(img => `
-                            <img src="${BASE_IMG_URL}${img.file_path}" class="rounded shadow-sm mb-2" style="width: 140px; height: 85px; object-fit: cover;" alt="Cena">
+                    <div class="d-flex gap-3 overflow-x-auto pb-2 w-100" style="scrollbar-width: thin;">
+                        ${data.images.backdrops.map(img => `
+                            <img src="${BASE_IMG_URL}${img.file_path}" class="rounded shadow-sm flex-shrink-0" style="width: 200px; height: 115px; object-fit: cover;" alt="Cena">
                         `).join('')}
                     </div>
                 `;
             }
 
-            // Recomendações 100% responsivas (quebra para a linha de baixo)
+            // Recomendações 100% responsivas com scroll horizontal
             let recomendacoesHtml = '<p class="small text-muted">Nenhuma recomendação disponível.</p>';
             if (dadosRecomendacoes.results && dadosRecomendacoes.results.length > 0) {
                 recomendacoesHtml = `
-                    <div class="d-flex flex-wrap gap-3 justify-content-start w-100">
-                        ${dadosRecomendacoes.results.slice(0, 10).map(rec => {
+                    <div class="d-flex gap-3 overflow-x-auto pb-3 w-100" style="scrollbar-width: thin;">
+                        ${dadosRecomendacoes.results.map(rec => {
                             const recTitulo = rec.title || rec.name || 'Sem Título';
                             const recPoster = rec.poster_path ? BASE_IMG_URL + rec.poster_path : 'https://placehold.co/100x150?text=Sem+Imagem';
                             const recNota = rec.vote_average ? rec.vote_average.toFixed(1) : 'N/A';
                             return `
-                                <div class="recommendation-item rec-item-click mb-2" style="width: 110px;" data-id="${rec.id}" data-tipo="${tipoMidia}">
+                                <div class="recommendation-item flex-shrink-0 rec-item-click" style="width: 120px;" data-id="${rec.id}" data-tipo="${tipoMidia}">
                                     <div class="position-relative">
-                                        <img src="${recPoster}" class="rounded shadow-sm w-100" style="height: 160px; object-fit: cover;" alt="${recTitulo}">
+                                        <img src="${recPoster}" class="rounded shadow-sm w-100" style="height: 170px; object-fit: cover;" alt="${recTitulo}">
                                         <span class="badge bg-dark bg-opacity-75 position-absolute top-0 end-0 m-1 text-warning small" style="font-size: 0.65rem;">
                                             <i class="bi bi-star-fill"></i> ${recNota}
                                         </span>
@@ -565,7 +565,7 @@
                     </div>
                 </div>
 
-                <!-- ELENCO PRINCIPAL (100% da Largura e Responsivo com quebra de linha) -->
+                <!-- ELENCO PRINCIPAL (100% da Largura e Responsivo) -->
                 <div class="row mt-4">
                     <div class="col-12">
                         <h6 class="fw-semibold mb-2">Elenco Principal <small class="text-muted fw-normal" style="font-size: 0.75rem;">(Clique na foto para ver biografia)</small></h6>
@@ -759,12 +759,6 @@
             carregarPopulares(this);
         });
     }
-
-    document.getElementById("detalhesModal").addEventListener('hide.bs.modal', () => {
-        if (document.activeElement) {
-            document.activeElement.blur();
-        }
-    });
 
     document.getElementById("btn-limpar-pais").addEventListener('click', limparPais);
     document.getElementById("btn-anterior").addEventListener('click', () => mudarPagina(-1));

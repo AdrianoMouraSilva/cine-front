@@ -1,3 +1,7 @@
+<script type="module">
+    import { initCadastro } from '../js/cadastro.js';
+    initCadastro();
+</script>
 <div class="row justify-content-center py-4">
     <div class="col-md-8 col-lg-6">
         <div class="card shadow-sm border-0 bg-body-tertiary p-4 rounded-4">
@@ -32,7 +36,17 @@
                     </label>
                     <input type="date" id="data-nascimento" name="data-nascimento" class="form-control" min="1920-01-01"
                         max="2026-12-31" required>
+                    <!-- Mensagem que aparece em vermelho quando for INVÁLIDO -->
+                    <div id="msg-erro-data" class="invalid-feedback">
+                        Por favor, informe uma data de nascimento válida.
+                    </div>
+
+                    <!-- Mensagem opcional que aparece em verde quando for VÁLIDO -->
+                    <div class="valid-feedback">
+                        Data de nascimento válida!
+                    </div>
                 </div>
+
 
                 <div class="mb-3">
                     <label for="password" class="form-label fw-semibold">Senha</label>
@@ -46,17 +60,32 @@
                         placeholder="Confirme sua senha" required>
                 </div>
 
+                <div class="mb-3">
+                    <div class="progress" role="progressbar" aria-label="Exemplo de progresso" aria-valuenow="0"
+                        aria-valuemin="0" aria-valuemax="100">
+                        <div id="minha-barra" class="progress-bar" style="width: 0%">0%</div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
                 <!-- Campo de Seleção de Sexo (name unificado para funcionar como grupo) -->
                 <div class="mb-3">
                     <label class="form-label fw-semibold d-block">Sexo</label>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="sexo" id="masculino" value="Masculino" required>
+                        <input class="form-check-input" type="radio" name="sexo" id="masculino" value="Masculino"
+                            required>
                         <label class="form-check-label" for="masculino">
                             Masculino
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="sexo" id="feminino" value="Feminino" required>
+                        <input class="form-check-input" type="radio" name="sexo" id="feminino" value="Feminino"
+                            required>
                         <label class="form-check-label" for="feminino">
                             Feminino
                         </label>
@@ -74,70 +103,181 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="generos" class="form-label fw-semibold d-block">Gêneros</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="acao" value="Ação" name="generos">
+                        <label class="form-check-label" for="acao">Ação</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="aventura" value="Aventura" name="generos">
+                        <label class="form-check-label" for="aventura">Aventura</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="animacao" value="Animação" name="generos">
+                        <label class="form-check-label" for="animacao">Animação</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="comedia" value="Comédia" name="generos">
+                        <label class="form-check-label" for="comedia">Comédia</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="crime" value="Crime" name="generos">
+                        <label class="form-check-label" for="crime">Crime</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="documentario" value="Documentário"
+                            name="generos">
+                        <label class="form-check-label" for="documentario">Documentário</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="drama" value="Drama" name="generos">
+                        <label class="form-check-label" for="drama">Drama</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="familia" value="Família" name="generos">
+                        <label class="form-check-label" for="familia">Família</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="fantasia" value="Fantasia" name="generos">
+                        <label class="form-check-label" for="fantasia">Fantasia</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="historia" value="historia" name="generos">
+                        <label class="form-check-label" for="historia">História</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="terror" value="Terror" name="generos">
+                        <label class="form-check-label" for="terror">Terror</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="musica" value="Música" name="generos">
+                        <label class="form-check-label" for="musica">Música</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="misterio" value="Mistério" name="generos">
+                        <label class="form-check-label" for="misterio">Mistério</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="romance" value="Romance" name="generos">
+                        <label class="form-check-label" for="romance">Romance</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="ficcao-cientifica" value="Ficção científica"
+                            name="generos">
+                        <label class="form-check-label" for="ficcao-cientifica">Ficção científica</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="cinema-tv" value="Cinema TV" name="generos">
+                        <label class="form-check-label" for="cinema-tv">Cinema TV</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="thriller" value="Thriller" name="generos">
+                        <label class="form-check-label" for="thriller">Thriller</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="guerra" value="Guerra" name="generos">
+                        <label class="form-check-label" for="guerra">Guerra</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="faroeste" value="Faroeste" name="generos">
+                        <label class="form-check-label" for="faroeste">Faroeste</label>
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="aceite-termos" name="aceite_termos" required>
+                        <input class="form-check-input" type="checkbox" role="switch" id="aceite-termos"
+                            name="aceite_termos" required>
                         <label class="form-check-label" for="aceite-termos">Li e aceito os termos</label>
                     </div>
                 </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold" id="btn-cadastrar"
+                        value="btn-cadastrar">
+                        <i class="bi bi-envelope me-1"></i> Cadastrar
+                    </button>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold" id="btn-limpar"
+                        value="btn-limpar">
+                        <i class="bi bi-envelope me-1"></i> Limpar
+                    </button>
+                </div>
 
-                <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold" id="btn-cadastrar">
-                    <i class="bi bi-envelope me-1"></i> Cadastrar
-                </button>
             </form>
         </div>
     </div>
 </div>
 
 <script type="module">
-    import { API_FORM_CADASTRAR } from '../config.js';
+    // import { API_FORM_CADASTRAR } from '../config.js';
 
-    const formCadastrar = document.getElementById('form-cadastro');
-    const botaoCadastrar = document.getElementById('btn-cadastrar');
-    const alertaSucesso = document.getElementById('alerta-sucesso');
+    // const formCadastrar = document.getElementById('form-cadastro');
+    // const botaoCadastrar = document.getElementById('btn-cadastrar');
+    // const alertaSucesso = document.getElementById('alerta-sucesso');
 
-    // Define o action do formulário dinamicamente
-    formCadastrar.action = API_FORM_CADASTRAR;
+    // // Define o action do formulário dinamicamente
+    // formCadastrar.action = API_FORM_CADASTRAR;
 
-    formCadastrar.addEventListener('submit', async function (event) {
-        event.preventDefault();
+    // formCadastrar.addEventListener('submit', async function (event) {
+    //     event.preventDefault();
 
-        const senha = document.getElementById('password').value;
-        const confirmaSenha = document.getElementById('confima-password').value;
+    //     const senha = document.getElementById('password').value;
+    //     const confirmaSenha = document.getElementById('confima-password').value;
 
-        // Validação básica de confirmação de senha
-        if (senha !== confirmaSenha) {
-            alert('As senhas digitadas não coincidem. Por favor, verifique.');
-            return;
-        }
+    //     // Validação básica de confirmação de senha
+    //     if (senha !== confirmaSenha) {
+    //         alert('As senhas digitadas não coincidem. Por favor, verifique.');
+    //         return;
+    //     }
 
-        // Esconde alerta anterior
-        alertaSucesso.classList.add('d-none');
+    //     // Esconde alerta anterior
+    //     alertaSucesso.classList.add('d-none');
 
-        // Estado de carregamento
-        botaoCadastrar.disabled = true;
-        botaoCadastrar.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Enviando cadastro...`;
+    //     // Estado de carregamento
+    //     botaoCadastrar.disabled = true;
+    //     botaoCadastrar.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Enviando cadastro...`;
 
-        try {
-            const response = await fetch(formCadastrar.action, {
-                method: 'POST',
-                body: new FormData(formCadastrar),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
+    //     try {
+    //         const response = await fetch(formCadastrar.action, {
+    //             method: 'POST',
+    //             body: new FormData(formCadastrar),
+    //             headers: {
+    //                 'Accept': 'application/json'
+    //             }
+    //         });
 
-            if (response.ok) {
-                formCadastrar.reset();
-                alertaSucesso.classList.remove('d-none');
-                alertaSucesso.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else {
-                alert('Ocorreu um erro ao enviar os dados. Verifique a URL do serviço de e-mail.');
-            }
-        } catch (error) {
-            alert('Erro de conexão ao tentar enviar o cadastro.');
-        } finally {
-            botaoCadastrar.disabled = false;
-            botaoCadastrar.innerHTML = `<i class="bi bi-envelope me-1"></i> Cadastrar`;
-        }
-    });
+    //         if (response.ok) {
+    //             formCadastrar.reset();
+    //             alertaSucesso.classList.remove('d-none');
+    //             alertaSucesso.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    //         } else {
+    //             alert('Ocorreu um erro ao enviar os dados. Verifique a URL do serviço de e-mail.');
+    //         }
+    //     } catch (error) {
+    //         alert('Erro de conexão ao tentar enviar o cadastro.');
+    //     } finally {
+    //         botaoCadastrar.disabled = false;
+    //         botaoCadastrar.innerHTML = `<i class="bi bi-envelope me-1"></i> Cadastrar`;
+    //     }
+    // });
 </script>

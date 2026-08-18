@@ -1,0 +1,143 @@
+<div class="row justify-content-center py-4">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0 bg-body-tertiary p-4 rounded-4">
+
+            <!-- Alerta bonito e moderno de sucesso (inicialmente oculto) -->
+            <div id="alerta-sucesso"
+                class="alert alert-success d-flex align-items-center d-none mb-4 rounded-3 shadow-sm" role="alert">
+                <i class="bi bi-check-circle-fill flex-shrink-0 me-2 fs-4"></i>
+                <div>
+                    <strong>Tudo certo!</strong> Seu cadastro foi enviado com sucesso.
+                </div>
+            </div>
+
+            <!-- O action começa vazio e será preenchido dinamicamente pelo JavaScript -->
+            <form id="form-cadastro" method="POST">
+
+                <div class="mb-3">
+                    <label for="nome" class="form-label fw-semibold">Nome</label>
+                    <input type="text" name="nome" class="form-control" id="nome" placeholder="Digite seu nome"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label fw-semibold">E-mail</label>
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Digite seu E-mail"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="data-nascimento" class="form-label fw-semibold">
+                        Data de Nascimento
+                    </label>
+                    <input type="date" id="data-nascimento" name="data-nascimento" class="form-control" min="1920-01-01"
+                        max="2026-12-31" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label fw-semibold">Senha</label>
+                    <input type="password" name="password" class="form-control" id="password"
+                        placeholder="Digite sua senha" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="confima-password" class="form-label fw-semibold">Confirme a Senha</label>
+                    <input type="password" name="confima-password" class="form-control" id="confima-password"
+                        placeholder="Confirme sua senha" required>
+                </div>
+
+                <!-- Campo de Seleção de Sexo (name unificado para funcionar como grupo) -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold d-block">Sexo</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="sexo" id="masculino" value="Masculino" required>
+                        <label class="form-check-label" for="masculino">
+                            Masculino
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="sexo" id="feminino" value="Feminino" required>
+                        <label class="form-check-label" for="feminino">
+                            Feminino
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="origem" class="form-label fw-semibold">Como você nos encontrou?</label>
+                    <select class="form-select" id="origem" name="origem" required>
+                        <option value="" selected disabled>Selecione uma opção...</option>
+                        <option value="Google">Google</option>
+                        <option value="Amigo">Indicação de Amigo</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="aceite-termos" name="aceite_termos" required>
+                        <label class="form-check-label" for="aceite-termos">Li e aceito os termos</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold" id="btn-cadastrar">
+                    <i class="bi bi-envelope me-1"></i> Cadastrar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { API_FORM_CADASTRAR } from '../config.js';
+
+    const formCadastrar = document.getElementById('form-cadastro');
+    const botaoCadastrar = document.getElementById('btn-cadastrar');
+    const alertaSucesso = document.getElementById('alerta-sucesso');
+
+    // Define o action do formulário dinamicamente
+    formCadastrar.action = API_FORM_CADASTRAR;
+
+    formCadastrar.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const senha = document.getElementById('password').value;
+        const confirmaSenha = document.getElementById('confima-password').value;
+
+        // Validação básica de confirmação de senha
+        if (senha !== confirmaSenha) {
+            alert('As senhas digitadas não coincidem. Por favor, verifique.');
+            return;
+        }
+
+        // Esconde alerta anterior
+        alertaSucesso.classList.add('d-none');
+
+        // Estado de carregamento
+        botaoCadastrar.disabled = true;
+        botaoCadastrar.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Enviando cadastro...`;
+
+        try {
+            const response = await fetch(formCadastrar.action, {
+                method: 'POST',
+                body: new FormData(formCadastrar),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                formCadastrar.reset();
+                alertaSucesso.classList.remove('d-none');
+                alertaSucesso.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                alert('Ocorreu um erro ao enviar os dados. Verifique a URL do serviço de e-mail.');
+            }
+        } catch (error) {
+            alert('Erro de conexão ao tentar enviar o cadastro.');
+        } finally {
+            botaoCadastrar.disabled = false;
+            botaoCadastrar.innerHTML = `<i class="bi bi-envelope me-1"></i> Cadastrar`;
+        }
+    });
+</script>

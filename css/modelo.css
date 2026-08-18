@@ -1,0 +1,19 @@
+
+.playwrite-de-la-guides-regular {
+  font-family: "Playwrite DE LA Guides", cursive;
+  font-weight: 400;
+  font-style: normal;
+  background-color: var(--text-primary);
+}
+
+
+.botao-principal{
+  background-color: var(--cine-principal);
+  color: var(--cine-escura);
+}
+
+.modo-cinema{
+  background-color: var(--cine-escura);
+  color: var(--cine-claro);
+}
+
