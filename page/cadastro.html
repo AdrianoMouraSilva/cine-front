@@ -1,7 +1,16 @@
+<style>
+    /* Regra CSS mínima necessária para acionar a exibição do balão customizado ao passar o mouse */
+    #group-hover:hover #balao-popover {
+        display: block !important;
+    }
+</style>
+
 <script type="module">
     import { initCadastro } from '../js/cadastro.js';
     initCadastro();
 </script>
+
+
 <div class="row justify-content-center py-4">
     <div class="col-md-8 col-lg-6">
         <div class="card shadow-sm border-0 bg-body-tertiary p-4 rounded-4">
@@ -36,14 +45,14 @@
                     </label>
                     <input type="date" id="data-nascimento" name="data-nascimento" class="form-control" min="1920-01-01"
                         max="2026-12-31" required>
+
+                    <!-- Mensagem opcional que aparece em verde quando for VÁLIDO -->
+                    <div id="msg-sucesso-data" class="valid-feedback">
+                        Data de nascimento válida!
+                    </div>
                     <!-- Mensagem que aparece em vermelho quando for INVÁLIDO -->
                     <div id="msg-erro-data" class="invalid-feedback">
                         Por favor, informe uma data de nascimento válida.
-                    </div>
-
-                    <!-- Mensagem opcional que aparece em verde quando for VÁLIDO -->
-                    <div class="valid-feedback">
-                        Data de nascimento válida!
                     </div>
                 </div>
 
@@ -52,12 +61,11 @@
                     <label for="password" class="form-label fw-semibold">Senha</label>
                     <input type="password" name="password" class="form-control" id="password"
                         placeholder="Digite sua senha" required>
-                </div>
+                    <div id="msg-sucesso-senha" class="valid-feedback">
+                    </div>
 
-                <div class="mb-3">
-                    <label for="confima-password" class="form-label fw-semibold">Confirme a Senha</label>
-                    <input type="password" name="confima-password" class="form-control" id="confima-password"
-                        placeholder="Confirme sua senha" required>
+                    <div id="msg-erro-senha" class="invalid-feedback">
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -69,6 +77,39 @@
                 </div>
 
 
+                <div class="mb-3 position-relative">
+                    <label for="confima-password" class="form-label fw-semibold">Confirme a Senha</label>
+
+                    <div class="position-relative d-inline-block w-100 group-hover">
+
+                        <input type="password" name="confima-password" class="form-control pe-none"
+                            id="confima-password" placeholder="Confirme sua senha" required disabled>
+
+                        <!-- Balão utilizando classes dinâmicas de tema do Bootstrap -->
+                        <div class="balao-popover position-absolute start-50 translate-middle-x bottom-100 mb-2 p-3 bg-body-tertiary text-body border rounded-3 shadow-lg w-100"
+                            style="max-width: 320px; z-index: 1050; display: none;">
+                            <div class="d-flex align-items-center mb-1 fw-bold text-warning">
+                                <span class="me-2">🔒</span> Requisito de Confirmação
+                            </div>
+                            <p class="small mb-2 text-body-secondary">
+                                Para garantir a segurança, repita a senha acima exatamente como digitou.
+                            </p>
+                            <ul class="small mb-0 ps-3 text-body-secondary">
+                                <li>Deve corresponder à Nova Senha</li>
+                                <li>Mínimo de 8 caracteres</li>
+                            </ul>
+                        </div>
+
+                        <div id="msg-sucesso-senha-confirma" class="valid-feedback"></div>
+                        <div id="msg-erro-senha-confirma" class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <style>
+                    .group-hover:hover .balao-popover {
+                        display: block !important;
+                    }
+                </style>
 
 
 

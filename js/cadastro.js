@@ -2,6 +2,23 @@
 'use strict';
 
 export function initCadastro() {
+    // const btnCadastrar = document.getElementById("btn-cadastrar");
+    const form = document.getElementById('form-cadastro');
+    const inputNome = document.getElementById("nome");
+    const inputEmail = document.getElementById("email");
+    const inputDataNascimento = document.getElementById("data-nascimento");
+    const inputPassword = document.getElementById("password");
+    const inputConfimaPassword = document.getElementById("confima-password");
+    const inputGeneros = obterGenerosSelecionados();
+    const inputTermos = document.querySelector('#aceite-termos');
+
+    const barraSenha = document.getElementById("minha-barra");
+
+    // Inicializa o tooltip do Bootstrap no elemento wrapper
+    const wrapperSenha = document.getElementById('wrapper-confirma-senha');
+    const tooltipSenha = new bootstrap.Tooltip(wrapperSenha);
+
+
     // Função para capturar todos os gêneros marcados
     function obterGenerosSelecionados() {
         const checkboxes = document.querySelectorAll('input[name="generos"]:checked');
@@ -26,15 +43,33 @@ export function initCadastro() {
         return idade >= 18 && idade < 30;
     }
 
+    function limparCampo() {
+        // Remove as classes de cores antigas do Bootstrap
+        barraSenha.classList.remove('bg-danger', 'bg-warning', 'bg-success', 'bg-info');
+        barraSenha.style.width = "0%"
+        barraSenha.textContent = "0%"
+
+        inputDataNascimento.classList.remove('is-invalid');
+        inputDataNascimento.classList.remove('is-valid');
+
+        inputPassword.classList.remove('is-valid');
+        inputPassword.classList.remove('is-invalid');
+
+        inputConfimaPassword.classList.remove('is-valid');
+        inputConfimaPassword.classList.remove('is-invalid');
+
+        // Executa o reset dos campos
+        form.reset();
+    }
+
     function validarIdadeUnix(dataNascimento) {
         const agora = Date.now(); // Unix timestamp atual em ms
         const nascimento = new Date(dataNascimento).getTime(); // Unix timestamp do nascimento
-        let valido = true;
+        let valido = false;
         let msg = 'Erro!';
 
         const valMenorAnos = '18'
         const valMaiorAnos = '60'
-
 
         // Conversão de anos para milissegundos
         const menorAnos = valMenorAnos * 365.25 * 24 * 60 * 60 * 1000;
@@ -46,13 +81,14 @@ export function initCadastro() {
         // return diferencaMs >= ms18Anos && diferencaMs < ms30Anos;
         if (diferencaMs < menorAnos) {
             msg = `É necessário ter pelo menos ${valMenorAnos} anos.`;
-            valido: false
+            valido = false
+
         } else if (diferencaMs >= maiorAnos) {
             msg = `A idade limite para cadastro é de ${valMaiorAnos} anos.`;
-            valido: false
+            valido = false
         } else {
-            valido: true,
-                msg = 'Idade validada com sucesso!';
+            valido = true
+            msg = 'Idade validada com sucesso!';
         }
 
         return {
@@ -61,20 +97,51 @@ export function initCadastro() {
         }
     }
 
-    // const btnCadastrar = document.getElementById("btn-cadastrar");
-    const inputNome = document.getElementById("nome");
-    const inputEmail = document.getElementById("email");
-    const inputDataNascimento = document.getElementById("data-nascimento");
-    const inputPassword = document.getElementById("password");
-    const inputConfimaPassword = document.getElementById("confima-password");
-    const inputGeneros = obterGenerosSelecionados();
-    const inputTermos = document.querySelector('#aceite-termos');
+    function validarSenha() {
+        if (inputConfimaPassword.value.length > 0) {
+            if (inputPassword.value !== inputConfimaPassword.value) {
+                const msgSenha = "Senha diferentes!!!"
+
+                inputPassword.classList.remove('is-valid');
+                inputPassword.classList.add('is-invalid');
+                document.getElementById("msg-erro-senha").innerHTML = msgSenha;
+
+                inputConfimaPassword.classList.remove('is-valid');
+                inputConfimaPassword.classList.add('is-invalid');
+
+                document.getElementById("msg-erro-senha-confirma").innerHTML = msgSenha;
+
+                statusErro = false;
+            } else {
+                const msgSenha2 = "Sucesso !!!"
+
+                inputPassword.classList.remove('is-invalid');
+                inputPassword.classList.add('is-valid');
+                document.getElementById("msg-sucesso-senha").innerHTML = msgSenha2;
+
+                inputConfimaPassword.classList.remove('is-invalid');
+                inputConfimaPassword.classList.add('is-valid');
+
+                document.getElementById("msg-sucesso-senha-confirma").innerHTML = msgSenha2;
+            }
+        } else {
+            inputPassword.classList.remove('is-invalid');
+            inputPassword.classList.remove('is-valid');
+            inputConfimaPassword.classList.remove('is-invalid');
+            inputConfimaPassword.classList.remove('is-valid');
+        }
+    }
 
 
-    const barraSenha = document.getElementById("minha-barra");
+    inputConfimaPassword.addEventListener('input', function (event) {
+        validarSenha()
+    });
+
+
 
     inputPassword.addEventListener('input', function (event) {
 
+        inputConfimaPassword.disabled = true;
 
         // Remove as classes de cores antigas do Bootstrap
         barraSenha.classList.remove('bg-danger', 'bg-warning', 'bg-success', 'bg-info');
@@ -100,6 +167,12 @@ export function initCadastro() {
             barraSenha.textContent = "100%"
             barraSenha.style.width = "100%"
             barraSenha.classList.add('bg-success');  // Verde (100%)
+
+            // Desabilita o campo após a validação com sucesso
+            inputConfimaPassword.disabled = false;
+        }
+        if (inputConfimaPassword.value.length > 0) {
+            validarSenha()
         }
     });
 
@@ -111,42 +184,75 @@ export function initCadastro() {
         const valorBotao = botaoClicado ? botaoClicado.value : '';
 
         if (valorBotao === 'btn-cadastrar') {
+            let statusErro = true;
+
             const generos = obterGenerosSelecionados();
 
             const msg = validarIdadeUnix(inputDataNascimento.value)
             if (inputPassword.value !== inputConfimaPassword.value) {
-                console.log("Senhas diferentes!!!");
-            } else {
+                const msgSenha = "Senha diferentes!!!"
 
+                inputPassword.classList.remove('is-valid');
+                inputPassword.classList.add('is-invalid');
+                document.getElementById("msg-erro-senha").innerHTML = msgSenha;
+
+                inputConfimaPassword.classList.remove('is-valid');
+                inputConfimaPassword.classList.add('is-invalid');
+
+                document.getElementById("msg-erro-senha-confirma").innerHTML = msgSenha;
+
+                statusErro = false;
+            } else {
+                const msgSenha2 = "Sucesso !!!"
+
+                inputPassword.classList.remove('is-invalid');
+                inputPassword.classList.add('is-valid');
+                document.getElementById("msg-sucesso-senha").innerHTML = msgSenha2;
+
+                inputConfimaPassword.classList.remove('is-invalid'); // Borda vermelha
+                inputConfimaPassword.classList.add('is-valid');
+
+                document.getElementById("msg-sucesso-senha-confirma").innerHTML = msgSenha2;
             }
 
             if (msg.valido) {
                 console.log("Idade if:", msg.msg)
                 inputDataNascimento.classList.remove('is-invalid'); // Borda vermelha
                 inputDataNascimento.classList.add('is-valid');
-
+                document.getElementById("msg-sucesso-data").innerHTML = msg.msg;
             } else {
-                console.log("Idade else:", msg.msg)
-
-                inputDataNascimento.classList.add('is-invalid'); // Borda vermelha
                 inputDataNascimento.classList.remove('is-valid');
+                inputDataNascimento.classList.add('is-invalid'); // Borda vermelha
+
+                document.getElementById("msg-erro-data").innerHTML = msg.msg;
+
+                statusErro = false;
             }
+            alert("ANTES Limpar = " + statusErro)
 
-            console.log("Gêneros selecionados:", generos);
-            console.log("Gêneros selecionados inputDataNascimento:", inputDataNascimento.value);
-
-
-            alert("Você clicou em Cadastrar!");
+            if (statusErro) {
+                alert("Limpar")
+                limparCampo();
+            } else {
+                alert("Não Limpar")
+            }
 
         } else if (valorBotao === 'btn-limpar') {
             // Reseta o formulário via JS
             this.reset();
             alert("Formulário limpo com sucesso!");
         }
-
-
-
-
     });
+
+    
+
+    // Função auxiliar: quando você habilitar o input via JS, pode destruir ou desativar o aviso
+    // function habilitarConfirmacaoSenha() {
+    //     const inputConfirma = document.getElementById('confima-password');
+    //     inputConfirma.disabled = false;
+
+    //     // Remove a dica visual quando o campo for liberado
+    //     tooltipSenha.disable();
+    // }
 
 }
