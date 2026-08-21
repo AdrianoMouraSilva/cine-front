@@ -2,15 +2,20 @@
     .movie-card {
         transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
+
     .movie-card:hover {
         transform: translateY(-6px);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25) !important;
     }
-    .recommendation-item, .actor-badge {
+
+    .recommendation-item,
+    .actor-badge {
         cursor: pointer;
         transition: transform 0.2s ease;
     }
-    .recommendation-item:hover, .actor-badge:hover {
+
+    .recommendation-item:hover,
+    .actor-badge:hover {
         transform: scale(1.03);
     }
 
@@ -24,7 +29,9 @@
     <!-- BARRA DE PESQUISA GLOBAL (MULTI-SEARCH) -->
     <div class="mb-4">
         <form id="form-busca" class="input-group">
-            <input type="text" id="input-busca" class="form-control rounded-start-pill ps-3 bg-body text-body border-secondary border-opacity-50" placeholder="Pesquisar filmes, séries, novelas..." aria-label="Pesquisar">
+            <input type="text" id="input-busca"
+                class="form-control rounded-start-pill ps-3 bg-body text-body border-secondary border-opacity-50"
+                placeholder="Pesquisar filmes, séries, novelas..." aria-label="Pesquisar">
             <button class="btn btn-primary px-4 rounded-end-pill" type="submit">
                 <i class="bi bi-search"></i> Buscar
             </button>
@@ -41,26 +48,26 @@
 
         <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
             <button id="btn-populares" class="btn btn-primary btn-sm rounded-pill px-3 py-2 active">Em Destaque</button>
-            
+
             <!-- COMBO INTERATIVO DE PAÍSES COM CORREÇÃO DE DIGITAÇÃO -->
             <div class="position-relative d-flex align-items-center gap-2">
-                <input class="form-control form-control-sm rounded-pill px-3 py-2 bg-body text-body border-secondary border-opacity-50 shadow-none" 
-                       list="lista-paises-opcoes" 
-                       id="input-pais-combo" 
-                       placeholder="Filtrar por país..." 
-                       autocomplete="off"
-                       style="min-width: 200px;">
+                <input
+                    class="form-control form-control-sm rounded-pill px-3 py-2 bg-body text-body border-secondary border-opacity-50 shadow-none"
+                    list="lista-paises-opcoes" id="input-pais-combo" placeholder="Filtrar por país..."
+                    autocomplete="off" style="min-width: 200px;">
                 <datalist id="lista-paises-opcoes">
                     <!-- Países injetados dinamicamente via JS -->
                 </datalist>
-                <button type="button" id="btn-limpar-pais" class="btn btn-outline-danger btn-sm rounded-circle p-1 lh-1" title="Limpar País" style="display: none; width: 28px; height: 28px;">
+                <button type="button" id="btn-limpar-pais" class="btn btn-outline-danger btn-sm rounded-circle p-1 lh-1"
+                    title="Limpar País" style="display: none; width: 28px; height: 28px;">
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
         </div>
 
         <!-- CONTAINER DE GÊNEROS -->
-        <div class="d-grid gap-2" style="grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));" id="filter-buttons-container">
+        <div class="d-grid gap-2" style="grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));"
+            id="filter-buttons-container">
             <!-- Gêneros serão injetados dinamicamente aqui -->
         </div>
     </div>
@@ -81,7 +88,8 @@
                 </button>
             </li>
             <li class="page-item disabled">
-                <span class="border-0 bg-transparent text-secondary px-2 small fw-semibold" id="pagina-atual-texto">Página 1</span>
+                <span class="border-0 bg-transparent text-secondary px-2 small fw-semibold"
+                    id="pagina-atual-texto">Página 1</span>
             </li>
             <li class="page-item" id="item-proxima">
                 <button class="btn btn-outline-secondary btn-sm rounded-pill px-3" id="btn-proxima">
@@ -106,7 +114,8 @@
                 </div>
             </div>
             <div class="modal-footer border-0">
-                <button type="button" class="btn btn-secondary btn-sm rounded-pill px-4" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-secondary btn-sm rounded-pill px-4"
+                    data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
@@ -115,8 +124,10 @@
 <script type="module">
     // import { API_KEY_TMDB, BASE_IMG_URL } from './config.js';
 
-    const API_KEY_TMDB =  "b680ff6965c16b32799a4fc4c012c709";
-    
+    const API_KEY_TMDB = "b680ff6965c16b32799a4fc4c012c709";
+    const BASE_IMG_URL = "https://image.tmdb.org/t/p/w500";
+
+
     let paginaAtual = 1;
     let totalPaginasMaximas = 500;
     let termoBuscaAtual = '';
@@ -126,7 +137,7 @@
     let generoSelecionadoId = null;
     let generoSelecionadoNome = null;
 
-    let mapaPaises = {}; 
+    let mapaPaises = {};
 
     async function carregarBotoesGeneros() {
         const url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY_TMDB}&language=pt-BR`;
@@ -146,7 +157,7 @@
                 button.setAttribute('title', genre.name);
                 button.dataset.id = genre.id;
                 button.dataset.nome = genre.name;
-                
+
                 button.addEventListener('click', () => {
                     filtrarPorGenero(genre.id, genre.name, button);
                 });
@@ -182,9 +193,9 @@
             });
 
             const inputCombo = document.getElementById("input-pais-combo");
-            inputCombo.addEventListener('input', function() {
+            inputCombo.addEventListener('input', function () {
                 const valorDigitado = this.value.trim();
-                
+
                 if (mapaPaises[valorDigitado]) {
                     filtrarPorPais(mapaPaises[valorDigitado], valorDigitado);
                 } else if (valorDigitado === '') {
@@ -220,7 +231,7 @@
         try {
             const resposta = await fetch(url);
             if (!resposta.ok) throw new Error(`Erro HTTP: ${resposta.status}`);
-            
+
             const dados = await resposta.json();
             const resultados = dados.results || [];
             totalPaginasMaximas = dados.total_pages > 500 ? 500 : (dados.total_pages || 1);
@@ -242,7 +253,7 @@
                 const nota = item.vote_average ? item.vote_average.toFixed(1) : 'N/A';
                 const tipoMidia = item.media_type || (item.first_air_date ? 'tv' : 'movie');
                 const tipoMidiaBadge = tipoMidia === 'tv' ? 'Série/Novela' : 'Filme';
-                
+
                 let paisOrigemBadge = '';
                 if (item.origin_country && item.origin_country.length > 0) {
                     paisOrigemBadge = `<span class="badge bg-secondary position-absolute bottom-0 start-0 m-2 opacity-75" style="font-size: 0.65rem;">${item.origin_country[0]}</span>`;
@@ -288,7 +299,7 @@
 
     function atualizarTituloCategoria() {
         const tituloEl = document.getElementById("categoria-titulo");
-        
+
         if (termoBuscaAtual) {
             tituloEl.innerHTML = `<i class="bi bi-search text-primary fs-5"></i> Resultados para: "${termoBuscaAtual}"`;
             return;
@@ -327,15 +338,15 @@
                 creditosHtml = `
                     <div class="d-flex gap-2 overflow-x-auto pb-2">
                         ${trabalhos.slice(0, 8).map(trab => {
-                            const tTitulo = trab.title || trab.name || 'Sem Título';
-                            const tPoster = trab.poster_path ? BASE_IMG_URL + trab.poster_path : 'https://placehold.co/100x150?text=Sem+Imagem';
-                            return `
+                    const tTitulo = trab.title || trab.name || 'Sem Título';
+                    const tPoster = trab.poster_path ? BASE_IMG_URL + trab.poster_path : 'https://placehold.co/100x150?text=Sem+Imagem';
+                    return `
                                 <div class="recommendation-item flex-shrink-0 trab-item" style="width: 100px;" data-id="${trab.id}" data-tipo="movie">
                                     <img src="${tPoster}" class="rounded shadow-sm w-100" style="height: 140px; object-fit: cover;" alt="${tTitulo}">
                                     <p class="small text-truncate mt-1 mb-0 fw-semibold" title="${tTitulo}" style="font-size: 0.7rem;">${tTitulo}</p>
                                 </div>
                             `;
-                        }).join('')}
+                }).join('')}
                     </div>
                 `;
             }
@@ -371,14 +382,14 @@
         }
     }
 
- async function abrirDetalhes(id, tipoMidia) {
+    async function abrirDetalhes(id, tipoMidia) {
         const modalElement = document.getElementById('detalhesModal');
         const modalTitulo = document.getElementById('modal-titulo-cabecalho');
         const modalCorpo = document.getElementById('modal-corpo-conteudo');
 
         modalTitulo.innerText = "Carregando detalhes...";
         modalCorpo.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-primary" role="status"></div></div>`;
-        
+
         const bsModal = new bootstrap.Modal(modalElement);
         bsModal.show();
 
@@ -395,17 +406,17 @@
 
             const data = await resDetalhes.json();
             const dadosRecomendacoes = resRecomendacoes.ok ? await resRecomendacoes.json() : { results: [] };
-            
+
             const titulo = data.title || data.name || 'Sem Título';
             const dataLancamento = data.release_date || data.first_air_date;
             const ano = dataLancamento ? new Date(dataLancamento).getFullYear() : 'N/A';
             const poster = data.poster_path ? BASE_IMG_URL + data.poster_path : 'https://placehold.co/500x750?text=Sem+Imagem';
             const nota = data.vote_average ? data.vote_average.toFixed(1) : 'N/A';
-            
+
             const generos = data.genres ? data.genres.map(g => `
                 <span class="badge bg-secondary me-1 genre-badge-click" style="cursor: pointer;" data-id="${g.id}" data-name="${g.name}" title="Filtrar por ${g.name}">${g.name}</span>
             `).join('') : '';
-            
+
             let paisesFormatados = 'N/A';
             if (tipoMidia === 'movie' && data.production_countries && data.production_countries.length > 0) {
                 paisesFormatados = data.production_countries.map(p => p.name).join(', ');
@@ -426,14 +437,14 @@
                 elencoHtml = `
                     <div class="d-flex flex-wrap gap-2 justify-content-start w-100">
                         ${data.credits.cast.slice(0, 12).map(ator => {
-                            const fotoAtor = ator.profile_path ? BASE_IMG_URL + ator.profile_path : 'https://placehold.co/100x150?text=Sem+Foto';
-                            return `
+                    const fotoAtor = ator.profile_path ? BASE_IMG_URL + ator.profile_path : 'https://placehold.co/100x150?text=Sem+Foto';
+                    return `
                                 <div class="actor-badge text-center ator-card-click mb-2" style="width: 80px;" data-id="${ator.id}" title="${ator.name}">
                                     <img src="${fotoAtor}" class="rounded-circle shadow-sm" style="width: 60px; height: 60px; object-fit: cover;" alt="${ator.name}">
                                     <p class="small text-truncate mt-1 mb-0 fw-semibold" style="font-size: 0.7rem;">${ator.name}</p>
                                 </div>
                             `;
-                        }).join('')}
+                }).join('')}
                     </div>
                 `;
             }
@@ -442,7 +453,7 @@
             if (data['watch/providers'] && data['watch/providers'].results && data['watch/providers'].results.BR) {
                 const brProviders = data['watch/providers'].results.BR;
                 const provedoresLista = brProviders.flatrate || brProviders.rent || brProviders.buy;
-                
+
                 if (provedoresLista && provedoresLista.length > 0) {
                     streamingHtml = `<div class="d-flex flex-wrap gap-2">` + provedoresLista.map(prov => `
                         <div class="d-flex align-items-center gap-1 bg-body-secondary border border-secondary border-opacity-25 rounded px-2 py-1">
@@ -463,20 +474,20 @@
                         const dadosColecao = await resColecao.json();
                         if (dadosColecao.parts && dadosColecao.parts.length > 0) {
                             const partesFilmes = dadosColecao.parts.sort((a, b) => new Date(a.release_date || '9999') - new Date(b.release_date || '9999'));
-                            
+
                             colecaoHtml = `
                                 <div class="row mt-4">
                                     <div class="col-12">
                                         <h6 class="fw-semibold mb-3"><i class="bi bi-collection me-1 text-primary"></i> Franquia: ${dadosColecao.name}</h6>
                                         <div class="d-flex flex-wrap gap-3 justify-content-start w-100">
                                             ${partesFilmes.map(colItem => {
-                                                const cTitulo = colItem.title || 'Sem Título';
-                                                const cPoster = colItem.poster_path ? BASE_IMG_URL + colItem.poster_path : 'https://placehold.co/100x150?text=Sem+Imagem';
-                                                const cAno = colItem.release_date ? new Date(colItem.release_date).getFullYear() : 'N/A';
-                                                const isAtual = colItem.id === data.id;
-                                                const estiloAtual = isAtual ? 'border border-2 border-primary' : '';
-                                                
-                                                return `
+                                const cTitulo = colItem.title || 'Sem Título';
+                                const cPoster = colItem.poster_path ? BASE_IMG_URL + colItem.poster_path : 'https://placehold.co/100x150?text=Sem+Imagem';
+                                const cAno = colItem.release_date ? new Date(colItem.release_date).getFullYear() : 'N/A';
+                                const isAtual = colItem.id === data.id;
+                                const estiloAtual = isAtual ? 'border border-2 border-primary' : '';
+
+                                return `
                                                     <div class="recommendation-item col-item-click mb-2" style="width: 110px;" data-id="${colItem.id}" data-tipo="movie">
                                                         <div class="position-relative">
                                                             <img src="${cPoster}" class="rounded shadow-sm w-100 ${estiloAtual}" style="height: 160px; object-fit: cover;" alt="${cTitulo}">
@@ -485,7 +496,7 @@
                                                         <p class="small text-truncate mt-1 mb-0 fw-semibold" title="${cTitulo}" style="font-size: 0.75rem;">${cTitulo} (${cAno})</p>
                                                     </div>
                                                 `;
-                                            }).join('')}
+                            }).join('')}
                                         </div>
                                     </div>
                                 </div>
@@ -515,10 +526,10 @@
                 recomendacoesHtml = `
                     <div class="d-flex flex-wrap gap-3 justify-content-start w-100">
                         ${dadosRecomendacoes.results.slice(0, 10).map(rec => {
-                            const recTitulo = rec.title || rec.name || 'Sem Título';
-                            const recPoster = rec.poster_path ? BASE_IMG_URL + rec.poster_path : 'https://placehold.co/100x150?text=Sem+Imagem';
-                            const recNota = rec.vote_average ? rec.vote_average.toFixed(1) : 'N/A';
-                            return `
+                    const recTitulo = rec.title || rec.name || 'Sem Título';
+                    const recPoster = rec.poster_path ? BASE_IMG_URL + rec.poster_path : 'https://placehold.co/100x150?text=Sem+Imagem';
+                    const recNota = rec.vote_average ? rec.vote_average.toFixed(1) : 'N/A';
+                    return `
                                 <div class="recommendation-item rec-item-click mb-2" style="width: 110px;" data-id="${rec.id}" data-tipo="${tipoMidia}">
                                     <div class="position-relative">
                                         <img src="${recPoster}" class="rounded shadow-sm w-100" style="height: 160px; object-fit: cover;" alt="${recTitulo}">
@@ -529,7 +540,7 @@
                                     <p class="small text-truncate mt-1 mb-0 fw-semibold" title="${recTitulo}" style="font-size: 0.75rem;">${recTitulo}</p>
                                 </div>
                             `;
-                        }).join('')}
+                }).join('')}
                     </div>
                 `;
             }
@@ -612,7 +623,7 @@
                 el.addEventListener('click', () => {
                     const gId = el.dataset.id;
                     const gName = el.dataset.name;
-                    
+
                     const modalInstance = bootstrap.Modal.getInstance(modalElement);
                     if (modalInstance) modalInstance.hide();
 
@@ -751,13 +762,13 @@
         document.getElementById("btn-limpar-pais").style.display = 'none';
         atualizarEstiloBotaoGenero(null);
         atualizarEstiloBotaoPopularesativo(false);
-        
+
         carregarFilmes(paginaAtual);
     });
 
     const btnPopulares = document.getElementById("btn-populares");
     if (btnPopulares) {
-        btnPopulares.addEventListener('click', function() {
+        btnPopulares.addEventListener('click', function () {
             carregarPopulares(this);
         });
     }
