@@ -15,8 +15,8 @@ export function initCadastro() {
     const barraSenha = document.getElementById("minha-barra");
 
     // Inicializa o tooltip do Bootstrap no elemento wrapper
-    const wrapperSenha = document.getElementById('wrapper-confirma-senha');
-    const tooltipSenha = new bootstrap.Tooltip(wrapperSenha);
+    // const wrapperSenha = document.getElementById('wrapper-confirma-senha');
+    // const tooltipSenha = new bootstrap.Tooltip(wrapperSenha);
 
 
     // Função para capturar todos os gêneros marcados
