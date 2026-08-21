@@ -176,7 +176,8 @@ async function router() {
     const appDiv = document.getElementById("app");
 
     try {
-        const resRoutes = await fetch('/routes.json');
+        // const resRoutes = await fetch('/routes.json');
+        const resRoutes = await fetch('./routes.json');
         if (!resRoutes.ok) throw new Error("Não foi possível carregar o arquivo routes.json");
         const routes = await resRoutes.json();
 
