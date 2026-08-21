@@ -110,8 +110,6 @@ export function initCadastro() {
                 inputConfimaPassword.classList.add('is-invalid');
 
                 document.getElementById("msg-erro-senha-confirma").innerHTML = msgSenha;
-
-                statusErro = false;
             } else {
                 const msgSenha2 = "Sucesso !!!"
 
